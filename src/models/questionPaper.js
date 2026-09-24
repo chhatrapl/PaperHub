@@ -40,7 +40,7 @@ const questionPaperSchema = new mongoose.Schema({
         type:String,
     },
     uploadedBy:{
-        type:Sting,
+        type:String,
         default:"Admin",
     },
 
