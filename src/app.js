@@ -1,6 +1,7 @@
 import express from "express";
 import cors from 'cors'
 import courseRoute from './routes/courseRoute.js'
+import questionPaperRoute from './routes/questionPaperRoute.js'
 
 const app = express();
 
@@ -14,5 +15,6 @@ app.get("/",(req, res)=>{
 
 //course rooute
 app.use('/api/v1/course', courseRoute);
+app.use('/api/v1/questionPaper', questionPaperRoute);
 
 export default app;

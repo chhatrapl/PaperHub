@@ -44,7 +44,7 @@ const questionPaperSchema = new mongoose.Schema({
         default:"Admin",
     },
 
-},{timestaps:true});
+},{timestamps:true});
 
 
 questionPaperSchema.index({course:1, semester:1, year:-1});
