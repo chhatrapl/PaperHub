@@ -5,11 +5,12 @@ import {
 	getQuestionPapers,
 	uploadQuestionPaper,
 } from '../controllers/questionPaperController.js';
+import verifyAdmin from '../middleware/verifyAdmin.js';
 
 const router = express.Router();
 
 router.get('/course/:courseCode/semester/:semester', getQuestionPapers);
-router.post('/upload', upload.single('pdf'), uploadQuestionPaper);
-router.delete('/:questionPaperId', deleteQuestionPaper);
+router.post('/upload', verifyAdmin, upload.single('pdf'), uploadQuestionPaper);
+router.delete('/:questionPaperId', verifyAdmin, deleteQuestionPaper);
 
 export default router;
