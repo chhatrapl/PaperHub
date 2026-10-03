@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import course from "../models/course.js";
 import QuestionPaper from "../models/questionPaper.js";
-import { cloudinary } from "../middleware/cloudinary.js";
+import { deleteQuestionPaperFile } from "../services/questionPaperStorage.js";
 
 export const getCourses = async (req, res) => {
     try {
@@ -81,17 +81,15 @@ export const deleteCourse = async (req, res) => {
             });
         }
 
-        const questionPapers = await QuestionPaper.find({ course: courseId }).select("publicId");
+        const questionPapers = await QuestionPaper.find({ course: courseId });
 
         for (const questionPaper of questionPapers) {
-            const cloudinaryResult = await cloudinary.uploader.destroy(questionPaper.publicId, {
-                resource_type: "raw",
-            });
-
-            if (cloudinaryResult.result !== "ok" && cloudinaryResult.result !== "not found") {
+            try {
+                await deleteQuestionPaperFile(questionPaper);
+            } catch (error) {
                 return res.status(502).json({
                     success: false,
-                    message: "Could not delete a related PDF from Cloudinary",
+                    message: error.message,
                 });
             }
         }

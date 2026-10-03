@@ -32,9 +32,9 @@ const questionPaperSchema = new mongoose.Schema({
             required:true,
         }
     },
-    publicId:{
-        type:String,
-        required:true,
+    storagePath: {
+        type: String,
+        required: true,
     },
     fileSize:{
         type:String,
