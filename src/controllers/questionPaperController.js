@@ -80,6 +80,13 @@ export const deleteQuestionPaper = async (req, res) => {
             });
         }
 
+        if (!questionPaper.storagePath) {
+            return res.status(409).json({
+                success: false,
+                message: "This paper is not stored in Supabase and cannot be deleted from storage.",
+            });
+        }
+
         try {
             await deleteQuestionPaperFile(questionPaper);
         } catch (error) {
